@@ -60,14 +60,16 @@ jobs:
       - name: Add packages
         run: |
           cd openwrt-18.06
-          git clone --depth=1 https://github.com/fumiama/openwrt-passwall.git ./package/passwall
-          git clone --depth=1 https://github.com/fumiama/openwrt-packages.git ./package/useful
-          git clone --depth=1 https://github.com/fumiama/opackages.git ./package/fumiama
-          git clone --depth=1 https://github.com/fumiama/openwrt-upx.git ./package/fumiama/upx
-          git clone --depth=1 https://github.com/fumiama/luci-theme-rosy.git ./package/fumiama/luci-theme-rosy
+          mkdir ./package/openwrt-packages
+          git clone --depth=1 https://github.com/fumiama/openwrt-passwall.git ./package/openwrt-packages/passwall
+          git clone --depth=1 https://github.com/fumiama/openwrt-packages.git ./package/openwrt-packages/useful
+          git clone --depth=1 https://github.com/fumiama/opackages.git ./package/openwrt-packages/fumiama
+          git clone --depth=1 https://github.com/fumiama/openwrt-upx.git ./package/openwrt-packages/fumiama/upx
+          git clone --depth=1 https://github.com/fumiama/luci-theme-rosy.git ./package/openwrt-packages/fumiama/luci-theme-rosy
           git clone --depth=1 https://github.com/fumiama/lede.git package/leana
-          mv package/leana/package/lean package/
+          mv package/leana/package/lean package/openwrt-packages/
           mv -n package/leana/package/libs/* package/libs/
+          mv -n package/leana/include/*.mk include/
           rm -rf package/leana
 
       - name: Update feeds
@@ -80,8 +82,6 @@ jobs:
         run: |
           cd openwrt-18.06
           cp .config.sf1200 .config
-          cd include
-          mv siwifi_version.mk.sf1200 siwifi_version.mk
 
       - name: Make download
         run: |
