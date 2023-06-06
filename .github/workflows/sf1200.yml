@@ -13,6 +13,7 @@ on:
   push:
     tags: 
       - v*
+  workflow_dispatch: # Put here!!
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
